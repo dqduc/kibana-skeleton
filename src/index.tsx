@@ -4,6 +4,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import '@elastic/eui/dist/eui_theme_amsterdam_light.css';
+
 
 ReactDOM.render(
   <React.StrictMode>
