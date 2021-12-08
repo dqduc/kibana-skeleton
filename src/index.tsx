@@ -2,16 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
-import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import '@elastic/eui/dist/eui_theme_amsterdam_light.css';
+import { EuiProvider } from "@elastic/eui";
+import '@elastic/eui/dist/eui_theme_light.min.css';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <EuiProvider>
+      <Router>
+        <App />
+      </Router>
+    </EuiProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
