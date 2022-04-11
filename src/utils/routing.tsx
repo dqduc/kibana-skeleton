@@ -1,7 +1,7 @@
-import { Route, useHistory } from "react-router-dom";
+import { useHref, useNavigate } from "react-router-dom";
 import { routes } from "../routes";
 
-type History = ReturnType<typeof useHistory>;
+type History = ReturnType<typeof useNavigate>;
 type MyMouseEvent = React.MouseEvent<HTMLElement, MouseEvent>;
 
 const isModifiedEvent = (event: MyMouseEvent) =>
@@ -26,7 +26,8 @@ export function _onClick(to: string, history: History) {
     }
 
     event.preventDefault(); // Prevent regular link behavior, which causes a browser refresh.
-    history.push(to); // Push the route to the history.
+    //history.push(to); // Push the route to the history.
+    history(to);
   };
 }
 
@@ -50,7 +51,7 @@ export function getLinks(history: History, setNavIsOpen: Function) {
 
       categorizedLinks[category].push({
         label,
-        href: history.createHref({ pathname: path }),
+        href: useHref({ pathname: path }),
         onClick: (event: MyMouseEvent) => {
           setNavIsOpen(false);
           _onClick(path, history)(event);
@@ -63,14 +64,15 @@ export function getLinks(history: History, setNavIsOpen: Function) {
   );
 }
 
-export function RouteWithSubRoutes(route: any) {
+// router v5
+/* export function RouteWithSubRoutes(route: any) {
   return (
     <Route
       path={route.path}
       render={(props) => (
         // pass the sub-routes down to keep nesting
         <route.component {...props} routes={route.routes} />
-      )}
+      )} 
     />
   );
-}
+} */

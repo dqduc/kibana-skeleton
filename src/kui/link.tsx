@@ -1,16 +1,16 @@
 import { EuiLink, EuiLinkButtonProps } from "@elastic/eui";
 import React from "react";
-import { useHistory } from "react-router";
+import { useHref, useNavigate } from "react-router-dom";
 import { _onClick } from "../utils/routing";
 
 export default function EuiCustomLink({
   to,
   ...rest
 }: { to: string } & EuiLinkButtonProps) {
-  const history = useHistory();
+  const history = useNavigate();
 
   // Generate the correct link href (with basename accounted for)
-  const href = history.createHref({ pathname: to });
+  const href = useHref({ pathname: to });
   const onClick = _onClick(to, history);
   const props = { ...rest, href, onClick };
 

@@ -19,14 +19,14 @@ import {
   EuiSelectableTemplateSitewide,
   EuiShowFor,
   EuiText,
-  EuiTitle,
+  EuiTitle
 } from "@elastic/eui";
 import React, { FunctionComponent, useState } from "react";
-import { Switch, useHistory } from "react-router-dom";
+import { Route, Routes, useHref, useNavigate } from "react-router-dom";
 import "./App.scss";
 import { ElasticMark } from "./kui/elastic_mark";
 import { orderedCategories, routes } from "./routes";
-import { getLinks, RouteWithSubRoutes, _onClick } from "./utils/routing";
+import { getLinks, _onClick } from "./utils/routing";
 
 const search = (
   <EuiSelectableTemplateSitewide
@@ -62,7 +62,7 @@ function setIsCategoryOpen(id: string, isOpen: boolean, storage: Storage) {
 }
 
 const App: FunctionComponent = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const storage = window.localStorage;
   const [isAlertFlyoutVisible, setIsAlertFlyoutVisible] = useState(false);
   const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
@@ -164,7 +164,7 @@ const App: FunctionComponent = () => {
                         {
                           label: "Home",
                           iconType: "home",
-                          href: history.createHref({ pathname: "" }),
+                          href: useHref({ pathname: "" }),
                           onClick: (event) => {
                             setNavIsOpen(false);
                             _onClick("", history)(event);
@@ -254,11 +254,11 @@ const App: FunctionComponent = () => {
           },
         ]}
       />
-      <Switch>
+      <Routes>
         {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
+          <Route key={i} path={route.path} element={<route.component />} /*{...route}*/ />
         ))}
-      </Switch>
+      </Routes>
       {isAlertFlyoutVisible && (
         <EuiPortal>
           <EuiFlyout
